@@ -12,7 +12,6 @@ public class UpdateText : MonoBehaviour, Observer{
     void Awake()
     {
         jobName = jobNameObject.text;
-        jobNameObject.text = jobName + " : ";
     }
 
     public void update(object value)
@@ -23,6 +22,7 @@ public class UpdateText : MonoBehaviour, Observer{
     void Start()
     {
         ObservableJobs.GetInstance().AddObserver(this,jobName);
+        jobNameObject.text = jobName + " : ";
     }
 
 

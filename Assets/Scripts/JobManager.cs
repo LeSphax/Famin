@@ -22,7 +22,7 @@ public class JobManager : MonoBehaviour
     public void DeleteWorker()
     {
         if (data.GetNumberOf(jobName)> 0)
-            data.Add(jobName, 1);
+            data.Add(jobName, -1);
     }
     public void AddWorker()
     {
