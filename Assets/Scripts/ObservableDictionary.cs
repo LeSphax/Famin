@@ -5,12 +5,20 @@ using System.Text;
 
 public class ObservableDictionary<TKey, TValue>
 {
+    private TKey _OBSERVE_ALL;
+
+    public TKey OBSERVE_ALL
+    {
+        get { return _OBSERVE_ALL; }
+        set { _OBSERVE_ALL = value; }
+    }
+
     private Dictionary<TKey,TValue> _dictionary;
     Dictionary<TKey, List<Observer>> observers;
-    public ObservableDictionary(Dictionary<TKey, List<Observer>> observers)
+    public ObservableDictionary()
     {
         _dictionary = new Dictionary<TKey, TValue>();
-        this.observers = observers;
+        observers = new Dictionary<TKey, List<Observer>>();
     }
 
     public void Add(TKey key,TValue value){
@@ -26,7 +34,7 @@ public class ObservableDictionary<TKey, TValue>
     {
         return _dictionary.TryGetValue(key, out value);
     }
-
+    
     public TValue this[TKey key]
     {
         get
@@ -42,11 +50,44 @@ public class ObservableDictionary<TKey, TValue>
                     _dictionary[key] = value;
                     foreach (Observer o in observers[key])
                     {
-                        o.update(value);
+                        o.UpdateObserver(value);
+                    }
+                    if (_OBSERVE_ALL != null)
+                    {
+                        foreach (Observer o in observers[_OBSERVE_ALL])
+                        {
+                            o.UpdateObserver(value);
+                        }
                     }
                 }
             }
         }
+    }
+
+    public void AddObserver(Observer o, TKey jobToObserve)
+    {
+        List<Observer> list;
+        if (observers.TryGetValue(jobToObserve, out list))
+        {
+            list.Add(o);
+        }
+        else
+        {
+            list = new List<Observer>();
+            list.Add(o);
+            observers.Add(jobToObserve, list);
+        }
+    }
+
+    public Dictionary<TKey, TValue>.ValueCollection GetValues()
+    {
+        return _dictionary.Values;
+    }
+
+
+    public Dictionary<TKey,TValue>.KeyCollection GetKeys()
+    {
+        return _dictionary.Keys;
     }
     
 }

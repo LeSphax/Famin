@@ -4,30 +4,50 @@ using System.Collections;
 
 public class JobManager : MonoBehaviour
 {
-
-    ObservableJobs data;
+    string nameUnemployed;
+    Jobs jobsData;
+    Ressources ressourcesData;
+    Buildings buildingsData;
     public Text textObject;
     string jobName;
 
     void Awake()
     {
         jobName = textObject.text;
+        nameUnemployed = GameObject.FindWithTag("Unemployed").GetComponent<Text>().text;
     }
 
     void Start()
     {
-        data = ObservableJobs.GetInstance();
+        jobsData = Jobs.GetInstance();
+        ressourcesData = Ressources.GetInstance();
+        buildingsData = Buildings.GetInstance();
     }
 
     public void DeleteWorker()
     {
-        if (data.GetNumberOf(jobName)> 0)
-            data.Add(jobName, -1);
+        if (jobsData.GetNumberOf(jobName) > 0)
+        {
+            jobsData.Add(jobName, -1);
+            jobsData.Add(nameUnemployed, 1);
+        }
     }
+
     public void AddWorker()
     {
-
-        data.Add(jobName, 1);
+        if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
+        {
+            if (jobsData.GetNumberOf(nameUnemployed) > 0)
+            {
+                jobsData.Add(nameUnemployed, -1);
+                jobsData.Add(jobName, 1);
+            }
+            else if (ressourcesData.GetNumberOf(Ressources.FOOD) >= 20)
+            {
+                ressourcesData.Add(Ressources.FOOD, -20);
+                jobsData.Add(jobName, 1);
+            }
+        }
     }
 
     public void OnClick()
