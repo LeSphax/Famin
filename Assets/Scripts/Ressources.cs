@@ -52,4 +52,20 @@ public class Ressources
         quantities[ressourceName] += value;
     }
 
+    public bool PayCosts(Cost[] costs)
+    {
+        foreach (Cost cost in costs)
+        {
+            if (quantities[cost.Name] < cost.Number)
+            {
+                return false;
+            }
+        }
+        foreach (Cost cost in costs)
+        {
+            quantities[cost.Name] -= cost.Number;
+        }
+        return true;
+    }
+
 }

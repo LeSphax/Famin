@@ -4,7 +4,6 @@ using System.Collections;
 
 public class JobManager : MonoBehaviour
 {
-    string nameUnemployed;
     Jobs jobsData;
     Ressources ressourcesData;
     Buildings buildingsData;
@@ -14,7 +13,6 @@ public class JobManager : MonoBehaviour
     void Awake()
     {
         jobName = textObject.text;
-        nameUnemployed = GameObject.FindWithTag("Unemployed").GetComponent<Text>().text;
     }
 
     void Start()
@@ -29,7 +27,7 @@ public class JobManager : MonoBehaviour
         if (jobsData.GetNumberOf(jobName) > 0)
         {
             jobsData.Add(jobName, -1);
-            jobsData.Add(nameUnemployed, 1);
+            jobsData.Add(Data.UNEMPLOYED, 1);
         }
     }
 
@@ -37,14 +35,13 @@ public class JobManager : MonoBehaviour
     {
         if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
         {
-            if (jobsData.GetNumberOf(nameUnemployed) > 0)
+            if (jobsData.GetNumberOf(Data.UNEMPLOYED) > 0)
             {
-                jobsData.Add(nameUnemployed, -1);
+                jobsData.Add(Data.UNEMPLOYED, -1);
                 jobsData.Add(jobName, 1);
             }
-            else if (ressourcesData.GetNumberOf(Ressources.FOOD) >= 20)
+            else if (ressourcesData.PayCosts(Data.GetCost(jobName)))
             {
-                ressourcesData.Add(Ressources.FOOD, -20);
                 jobsData.Add(jobName, 1);
             }
         }

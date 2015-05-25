@@ -13,7 +13,7 @@ public class ObservableDictionary<TKey, TValue>
         set { _OBSERVE_ALL = value; }
     }
 
-    private Dictionary<TKey,TValue> _dictionary;
+    private Dictionary<TKey, TValue> _dictionary;
     Dictionary<TKey, List<Observer>> observers;
     public ObservableDictionary()
     {
@@ -21,7 +21,8 @@ public class ObservableDictionary<TKey, TValue>
         observers = new Dictionary<TKey, List<Observer>>();
     }
 
-    public void Add(TKey key,TValue value){
+    public void Add(TKey key, TValue value)
+    {
         _dictionary.Add(key, value);
     }
 
@@ -30,11 +31,11 @@ public class ObservableDictionary<TKey, TValue>
         _dictionary.Remove(key);
     }
 
-    public bool TryGetValue(TKey key,out TValue value)
+    public bool TryGetValue(TKey key, out TValue value)
     {
         return _dictionary.TryGetValue(key, out value);
     }
-    
+
     public TValue this[TKey key]
     {
         get
@@ -44,15 +45,17 @@ public class ObservableDictionary<TKey, TValue>
         set
         {
             TValue v;
-            if (_dictionary.TryGetValue(key,out v)){
-                if (!Equals(v,value))
+            if (_dictionary.TryGetValue(key, out v))
+            {
+                if (!Equals(v, value))
                 {
                     _dictionary[key] = value;
                     foreach (Observer o in observers[key])
                     {
                         o.UpdateObserver(value);
                     }
-                    if (_OBSERVE_ALL != null)
+                    List<Observer> l;
+                    if (_OBSERVE_ALL != null && observers.TryGetValue(_OBSERVE_ALL, out l))
                     {
                         foreach (Observer o in observers[_OBSERVE_ALL])
                         {
@@ -85,9 +88,9 @@ public class ObservableDictionary<TKey, TValue>
     }
 
 
-    public Dictionary<TKey,TValue>.KeyCollection GetKeys()
+    public Dictionary<TKey, TValue>.KeyCollection GetKeys()
     {
         return _dictionary.Keys;
     }
-    
+
 }

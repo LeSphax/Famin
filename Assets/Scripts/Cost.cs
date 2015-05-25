@@ -2,34 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Cost{
+public class Cost
+{
+    private string name;
 
-
-    public List<Ressource> list;
-
-    public class Ressource
+    public string Name
     {
-        private string name;
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-        private int number;
-
-        public int Number
-        {
-            get { return number; }
-            set { number = value; }
-        }
-
-        public Ressource(string name, int number)
-        {
-            this.name = name;
-            this.number = number;
-        }
-
-
+        get { return name; }
+        set { name = value; }
     }
+    private int number;
+
+    public int Number
+    {
+        get { return number; }
+        set { number = value; }
+    }
+
+    public Cost(string name, int number)
+    {
+        this.name = name;
+        this.number = number;
+    }
+
 }
+

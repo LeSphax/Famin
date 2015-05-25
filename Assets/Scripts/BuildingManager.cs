@@ -10,6 +10,8 @@ public class BuildingManager : MonoBehaviour
     public Text textObject;
     string buildingName;
 
+    public Text[] costs;
+
     void Awake()
     {
         buildingName = textObject.text;
@@ -25,6 +27,7 @@ public class BuildingManager : MonoBehaviour
 
     public void AddBuilding()
     {
+        if (ressourcesData.PayCosts(Data.GetCost(buildingName)))
         buildingsData.Add(buildingName, 1);
     }
 
@@ -34,5 +37,10 @@ public class BuildingManager : MonoBehaviour
         {
             AddBuilding();
         }
+    }
+
+    private void ComputeCost()
+    {
+
     }
 }
