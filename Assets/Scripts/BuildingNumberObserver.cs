@@ -26,7 +26,7 @@ public class BuildingNumberObserver : MonoBehaviour, Observer {
     void Start()
     {
         buildings.AddObserver(this, buildingName);
-        buildings.Add(buildingName, Int64.Parse(buildingNumber));
+        buildings.Add(buildingName, Int32.Parse(buildingNumber));
         buildingNameObject.text = buildingName + " : ";
     }
 }

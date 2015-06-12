@@ -23,24 +23,34 @@ public class Data
     public const string MINERS = "Miners";
     public const string WOODCUTTERS = "Woodcutters";
     public const string UNEMPLOYED = "Unemployed";
+    public const string PERSON = "Person";
+    public const string SOLDIERS = "Soldiers";
+    public const string RAIDERS = "Raiders";
+    public const string SENT_RAIDERS = "Sent Raiders";
 
-    static Cost[] COST_HOUSE = { new Cost(Ressources.WOOD, 20), new Cost(Ressources.STONE, 10) };
-    static Cost[] COST_PERSON = { new Cost(Ressources.FOOD, 20) };
+    static Cost[] FREE_COST = { };
+    static Cost[] HOUSE_COST = { new Cost(Ressources.WOOD, 20), new Cost(Ressources.STONE, 10) };
+    static Cost[] PERSON_COST = { new Cost(Ressources.FOOD, 20) };
+    static Cost[] SOLDIER_COST = { new Cost(Ressources.STONE, 10), new Cost(Ressources.WOOD, 10) };
 
     static void InitCosts()
     {
         costs = new Dictionary<string, Cost[]>();
-        costs.Add(HOUSES, COST_HOUSE);
-        costs.Add(FARMERS, COST_PERSON);
-        costs.Add(MINERS, COST_PERSON);
-        costs.Add(WOODCUTTERS, COST_PERSON);
-        costs.Add(UNEMPLOYED, COST_PERSON);
+        costs.Add(HOUSES, HOUSE_COST);
+        costs.Add(FARMERS, FREE_COST);
+        costs.Add(MINERS, FREE_COST);
+        costs.Add(WOODCUTTERS, FREE_COST);
+        costs.Add(UNEMPLOYED, FREE_COST);
+        costs.Add(PERSON, PERSON_COST);
+        costs.Add(SOLDIERS, SOLDIER_COST);
+        costs.Add(RAIDERS, FREE_COST);
+        costs.Add(SENT_RAIDERS, FREE_COST);
     }
 
     public static Cost[] GetCost(string name)
     {
         Cost[] cost;
-        if (Costs.TryGetValue(name,out cost))
+        if (Costs.TryGetValue(name, out cost))
             return cost;
         else
         {

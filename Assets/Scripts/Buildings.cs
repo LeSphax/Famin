@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Buildings {
 
     static Buildings instance;
-    ObservableDictionary<string, long> buildings;
+    ObservableDictionary<string, int> buildings;
 
     public static string HOUSE="Houses";
     public static string OBSERVE_ALL="All";
@@ -27,7 +27,7 @@ public class Buildings {
     public void AddObserver(Observer o, string buildingToObserve)
     {
         buildings.AddObserver(o, buildingToObserve);
-        long x;
+        int x;
         if (!buildings.TryGetValue(buildingToObserve, out x))
         {
             buildings.Add(buildingToObserve, 0);
@@ -36,27 +36,52 @@ public class Buildings {
 
     void InitDictionaries()
     {
-        buildings = new ObservableDictionary<string, long>();
+        buildings = new ObservableDictionary<string, int>();
         buildings.OBSERVE_ALL = OBSERVE_ALL;
     }
 
-    public long GetNumberOf(string buildingName)
+    public int GetNumberOf(string buildingName)
     {
         return buildings[buildingName];
     }
 
-    public void SetNumberOf(string buildingName, long value)
+    public void SetNumberOf(string buildingName, int value)
     {
         buildings[buildingName] = value;
     }
 
-    public void Add(string buildingName, long value)
+    public void Add(string buildingName, int value)
     {
         buildings[buildingName] += value;
     }
 
-    public long GetPopLimit(){
+    public int GetPopLimit(){
         return buildings[HOUSE]*5;
+    }
+
+    public int Burn(int number)
+    {
+        int initNumber = number;
+        List<string> keys = new List<string>(buildings.GetKeys());
+        bool isPeopleLeft = true;
+        while (number > 0 && isPeopleLeft)
+        {
+            isPeopleLeft = false;
+            foreach (string key in keys)
+            {
+                if (number == 0)
+                {
+                    break;
+                }
+                else if (buildings[key] > 0)
+                {
+                    number -= 1;
+                    buildings[key] -= 1;
+                    isPeopleLeft = true;
+                }
+            }
+        }
+        return initNumber - number;
     }
 
 }

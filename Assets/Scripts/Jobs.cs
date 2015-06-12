@@ -6,11 +6,9 @@ public class Jobs
 {
 
     static Jobs instance;
-    ObservableDictionary<string, long> jobs;
+    ObservableDictionary<string, int> jobs;
 
-    public static string FARMER = "Farmer";
-    public static double COST_PERSON = 20;
-
+    Ressources ressources;
     public static string OBSERVE_ALL = "All";
 
     public static Jobs GetInstance()
@@ -24,13 +22,14 @@ public class Jobs
 
     private Jobs()
     {
+        ressources = Ressources.GetInstance();
         InitDictionaries();
     }
 
     public void AddObserver(Observer o, string jobToObserve)
     {
         jobs.AddObserver(o, jobToObserve);
-        long x;
+        int x;
         if (!jobs.TryGetValue(jobToObserve, out x))
         {
             jobs.Add(jobToObserve, 0);
@@ -39,40 +38,43 @@ public class Jobs
 
     void InitDictionaries()
     {
-        jobs = new ObservableDictionary<string, long>();
+        jobs = new ObservableDictionary<string, int>();
         jobs.OBSERVE_ALL = OBSERVE_ALL;
     }
 
-    public long GetNumberOf(string jobName)
+    public int GetNumberOf(string jobName)
     {
         return jobs[jobName];
     }
 
-    public void SetNumberOf(string jobName, long value)
+    public void SetNumberOf(string jobName, int value)
     {
         jobs[jobName] = value;
     }
 
-    public void Add(string jobName, long value)
+    public void Add(string jobName, int value)
     {
         jobs[jobName] += value;
     }
 
-    public long GetTotalPopulation()
+    public int GetTotalPopulation()
     {
-        long pop = 0;
-        foreach (long job in jobs.GetValues())
+        int pop = 0;
+        foreach (int job in jobs.GetValues())
         {
             pop += job;
         }
         return pop;
     }
 
-    public void KillPeople(int number)
+    public int KillPeople(int number)
     {
-        List<string> keys=new List<string>(jobs.GetKeys());
-        while (number > 0)
+        int initNumber = number;
+        List<string> keys = new List<string>(jobs.GetKeys());
+        bool isPeopleLeft = true;
+        while (number > 0 && isPeopleLeft)
         {
+            isPeopleLeft = false;
             foreach (string key in keys)
             {
                 if (number == 0)
@@ -83,8 +85,37 @@ public class Jobs
                 {
                     number -= 1;
                     jobs[key] -= 1;
+                    isPeopleLeft = true;
                 }
             }
         }
+        return initNumber - number;
+    }
+
+    public bool ChangeJob(string jobToChange, string jobToGet, int number)
+    {
+
+        if (jobs[jobToChange] >= number)
+        {
+            if (ressources.PayCosts(Data.GetCost(jobToGet), number))
+            {
+                jobs[jobToChange] -= number;
+                jobs[jobToGet] += number;
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public bool ChangeJob(string jobToChange, string jobToGet)
+    {
+        if (ressources.PayCosts(Data.GetCost(jobToGet), jobs[jobToChange]))
+        {
+            jobs[jobToGet] += jobs[jobToChange];
+            jobs[jobToChange] = 0;
+            return true;
+        }
+        return false;
     }
 }

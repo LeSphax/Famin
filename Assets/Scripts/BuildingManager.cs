@@ -15,6 +15,7 @@ public class BuildingManager : MonoBehaviour
     void Awake()
     {
         buildingName = textObject.text;
+        Time.fixedDeltaTime = 1;
 
     }
 
@@ -36,6 +37,14 @@ public class BuildingManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             AddBuilding();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (buildingsData.GetNumberOf(buildingName) == 0)
+        {
+            Application.LoadLevel("Losing");
         }
     }
 

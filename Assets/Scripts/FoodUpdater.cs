@@ -13,7 +13,7 @@ public class FoodUpdater : IUpdatingStrategy{
 
     public override double CalculateIncrement()
     {
-        return jobs.GetNumberOf("Farmers")*1.2;
+        return jobs.GetNumberOf("Farmers")*1.5;
     }
 
 }

@@ -7,12 +7,14 @@ public class JobManager : MonoBehaviour
     Jobs jobsData;
     Ressources ressourcesData;
     Buildings buildingsData;
+    Logger logger;
     public Text textObject;
     string jobName;
 
     void Awake()
     {
         jobName = textObject.text;
+        logger = Logger.GetInstance();
     }
 
     void Start()
@@ -24,26 +26,33 @@ public class JobManager : MonoBehaviour
 
     public void DeleteWorker()
     {
-        if (jobsData.GetNumberOf(jobName) > 0)
-        {
-            jobsData.Add(jobName, -1);
-            jobsData.Add(Data.UNEMPLOYED, 1);
-        }
+        jobsData.ChangeJob(jobName, Data.UNEMPLOYED, 1);
     }
 
     public void AddWorker()
     {
-        if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
+        if (jobsData.GetNumberOf(Data.UNEMPLOYED) > 0)
         {
-            if (jobsData.GetNumberOf(Data.UNEMPLOYED) > 0)
+            jobsData.ChangeJob(Data.UNEMPLOYED, jobName, 1);
+        }
+        else if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
+        {
+            if (ressourcesData.PayCosts(Data.GetCost(jobName)))
             {
-                jobsData.Add(Data.UNEMPLOYED, -1);
-                jobsData.Add(jobName, 1);
+                if (ressourcesData.PayCosts(Data.GetCost(Data.PERSON)))
+                {
+                    jobsData.Add(jobName, 1);
+                }
+                else
+                {
+                    ressourcesData.RefundCost(Data.GetCost(jobName));
+                }
+
             }
-            else if (ressourcesData.PayCosts(Data.GetCost(jobName)))
-            {
-                jobsData.Add(jobName, 1);
-            }
+        }
+        else
+        {
+            logger.PutLine("Build more ziggourats");
         }
     }
 
