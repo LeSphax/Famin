@@ -26,34 +26,32 @@ public class JobManager : MonoBehaviour
 
     public void DeleteWorker()
     {
-        jobsData.ChangeJob(jobName, Data.UNEMPLOYED, 1);
+        jobsData.ChangeJob(jobName, Data.IDLE, 1);
     }
 
     public void AddWorker()
     {
-        if (jobsData.GetNumberOf(Data.UNEMPLOYED) > 0)
+        if (jobsData.GetNumberOf(Data.IDLE) > 0)
         {
-            jobsData.ChangeJob(Data.UNEMPLOYED, jobName, 1);
+            jobsData.ChangeJob(Data.IDLE, jobName, 1);
         }
-        else if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
+        //else if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
+        else if (ressourcesData.PayCosts(Data.GetCost(jobName)))
         {
-            if (ressourcesData.PayCosts(Data.GetCost(jobName)))
+            if (ressourcesData.PayCosts(Data.GetCost(Data.PERSON)))
             {
-                if (ressourcesData.PayCosts(Data.GetCost(Data.PERSON)))
-                {
-                    jobsData.Add(jobName, 1);
-                }
-                else
-                {
-                    ressourcesData.RefundCost(Data.GetCost(jobName));
-                }
-
+                jobsData.Add(jobName, 1);
             }
+            else
+            {
+                ressourcesData.RefundCost(Data.GetCost(jobName));
+            }
+
         }
-        else
+        /*else
         {
-            logger.PutLine("Build more ziggourats");
-        }
+            logger.PutLine("Build more houses");
+        }*/
     }
 
     public void OnClick()

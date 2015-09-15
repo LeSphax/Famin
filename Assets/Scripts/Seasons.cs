@@ -10,7 +10,7 @@ public class Seasons : MonoBehaviour
     public Slider slider;
     public Image handleImage;
     float timer;
-    int currentSeason;
+    public static int currentSeason;
 
     public const int SUMMER = 0;
     public const int FALL = 1;
@@ -18,7 +18,7 @@ public class Seasons : MonoBehaviour
     public const int SPRING = 3;
 
     public const int NUMBER_SEASONS = 4;
-    public const int DURATION = 30;
+    public const int DURATION = 60;
 
 
     void Start()
@@ -41,8 +41,13 @@ public class Seasons : MonoBehaviour
 
     void ChangeHandle()
     {
-        currentSeason += 1%4;
+        currentSeason = (currentSeason+1)%4;
         handleImage.sprite = handles[currentSeason];
         timer = 0;
+    }
+
+    public static int GetCurrentSeason()
+    {
+        return currentSeason;
     }
 }
