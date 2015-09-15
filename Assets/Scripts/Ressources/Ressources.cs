@@ -41,12 +41,18 @@ public class Ressources
 
     public void SetNumberOf(string ressourceName, double value)
     {
+        if (value < 0)
+        {
+            Debug.Log("Can't set a ressource's value to a negative number");
+        }
         quantities[ressourceName] = value;
     }
 
     public void Add(string ressourceName, double value)
     {
         quantities[ressourceName] += value;
+        if (quantities[ressourceName] < 1)
+            quantities[ressourceName] = 0;
     }
 
     public bool PayCosts(Cost[] costs)
@@ -79,16 +85,6 @@ public class Ressources
             quantities[cost.Name] -= cost.Number * times;
         }
         return true;
-    }
-
-    public void RecoltPlants(double quantitie)
-    {
-        if (quantities[Data.PLANTED_FOOD] > 0)
-        {
-            double recoltedFood = Math.Min(quantitie, quantities[Data.PLANTED_FOOD]);
-            quantities[Data.PLANTED_FOOD] -= recoltedFood;
-            quantities[Data.FOOD] += recoltedFood;
-        }
     }
 
     public void RefundCost(Cost[] costs)

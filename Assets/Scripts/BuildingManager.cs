@@ -15,8 +15,6 @@ public class BuildingManager : MonoBehaviour
     void Awake()
     {
         buildingName = textObject.text;
-        Time.fixedDeltaTime = 1;
-
     }
 
     void Start()

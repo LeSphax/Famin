@@ -12,7 +12,7 @@ public class StoneUpdater : IUpdatingStrategy
 
     public override double CalculateIncrement()
     {
-        return jobs.GetNumberOf("Miners")*0.5;
+        return jobs.GetNumberOf("Miners")/4;
     }
 
 }

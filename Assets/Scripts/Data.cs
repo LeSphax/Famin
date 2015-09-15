@@ -25,9 +25,10 @@ public class Data
 
     public const string HOUSES = "Houses";
     public const string FARMERS = "Farmers";
+    public const string GATHERERS = "Gatherers";
     public const string MINERS = "Miners";
     public const string WOODCUTTERS = "Woodcutters";
-    public const string IDLE = "Villagers";
+    public const string IDLE = "Idle";
     public const string PERSON = "Person";
     public const string SOLDIERS = "Soldiers";
     public const string RAIDERS = "Raiders";
@@ -35,19 +36,21 @@ public class Data
 
     static Cost[] FREE_COST = { };
     static Cost[] HOUSE_COST = { new Cost(WOOD, 20), new Cost(STONE, 10) };
-    static Cost[] PERSON_COST = { new Cost(FOOD, 20) };
-    static Cost[] SOLDIER_COST = { new Cost(STONE, 10), new Cost(WOOD, 10) };
+    static Cost[] PERSON_COST = { new Cost(FOOD, 100) };
+    static Cost[] WEAPON_COST = { new Cost(WOOD, 100) };
+    static Cost[] SOLDIER_COST = { new Cost(WOOD, 100) };
 
     static void InitCosts()
     {
         costs = new Dictionary<string, Cost[]>();
         costs.Add(HOUSES, HOUSE_COST);
         costs.Add(FARMERS, FREE_COST);
+        costs.Add(GATHERERS, FREE_COST);
         costs.Add(MINERS, FREE_COST);
         costs.Add(WOODCUTTERS, FREE_COST);
         costs.Add(IDLE, FREE_COST);
         costs.Add(PERSON, PERSON_COST);
-        costs.Add(SOLDIERS, SOLDIER_COST);
+        costs.Add(SOLDIERS, FREE_COST);
         costs.Add(RAIDERS, FREE_COST);
         costs.Add(SENT_RAIDERS, FREE_COST);
     }

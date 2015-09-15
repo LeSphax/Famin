@@ -18,12 +18,12 @@ public class Seasons : MonoBehaviour
     public const int SPRING = 3;
 
     public const int NUMBER_SEASONS = 4;
-    public const int DURATION = 60;
+    public const int DURATION = 30;
 
-
+    public int startingSeason;
     void Start()
     {
-        currentSeason = SUMMER;
+        currentSeason = startingSeason;
         handleImage.sprite = handles[currentSeason];
         timer = 0;
     }

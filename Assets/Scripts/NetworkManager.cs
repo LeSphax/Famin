@@ -9,6 +9,7 @@ public class NetworkManager : Photon.MonoBehaviour
     void Awake()
     {
         GameObject.DontDestroyOnLoad(this);
+        Time.fixedDeltaTime = 1f;
     }
 
     void Start()

@@ -2,25 +2,28 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class JobNumberObserver : MonoBehaviour, Observer{
+public class JobNumberObserver : MonoBehaviour, Observer
+{
 
     public Text jobNameObject;
     public Text jobNumberObject;
-    string jobName;
+    public string jobName;
 
     void Awake()
     {
-        jobName = jobNameObject.text;
+        if (jobNameObject != null)
+            jobName = jobNameObject.text;
     }
 
     public void UpdateObserver(object value)
     {
-        jobNumberObject.text = ""+value;
+        jobNumberObject.text = "" + value;
     }
 
     void Start()
     {
-        Jobs.GetInstance().AddObserver(this,jobName);
+        Jobs.GetInstance().AddObserver(this, jobName);
+        if (jobNameObject != null)
         jobNameObject.text = jobName + " : ";
     }
 

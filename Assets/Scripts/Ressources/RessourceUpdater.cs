@@ -11,12 +11,12 @@ public class RessourceUpdater : MonoBehaviour, Observer
     Ressources ressources;
     public Text ressourceQuantity;
     public Text ressourceChange;
+    public static float updateInterval = 0.25f;
 
     void Awake()
     {
         updater = this.gameObject.GetComponent<IUpdatingStrategy>();
         ressources = Ressources.GetInstance();
-        Time.fixedDeltaTime = 0.25f;
     }
 
     void Start()
@@ -24,17 +24,15 @@ public class RessourceUpdater : MonoBehaviour, Observer
         ressources.AddObserver(this, updater.RessourceName);
         string ressourceNumber = this.GetComponent<Text>().text;
         ressources.Add(updater.RessourceName, Int64.Parse(ressourceNumber));
+        InvokeRepeating("RessourceUpdate", updateInterval, updateInterval);
     }
 
-    void FixedUpdate()
+    void RessourceUpdate()
     {
-        ressources.Add(updater.RessourceName, updater.CalculateIncrement());
-        ressourceChange.SendMessage("SetRessourceChange",updater.CalculateIncrement()*4);
-    }
+        double recolt = updater.CalculateIncrement();
+        ressources.Add(updater.RessourceName, recolt * updateInterval);
+        ressourceChange.SendMessage("SetRessourceChange", recolt);
 
-    public void OnClick()
-    {
-        ressources.Add(updater.RessourceName, 1);
     }
 
     public void UpdateObserver(object value)

@@ -9,7 +9,7 @@ public class Jobs
     ObservableDictionary<string, int> jobs;
 
     Ressources ressources;
-    public static string OBSERVE_ALL = "All";
+    public static string OBSERVE_ALL = "Villagers";
 
     public static Jobs GetInstance()
     {

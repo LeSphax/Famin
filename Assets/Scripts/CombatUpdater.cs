@@ -31,7 +31,6 @@ public class CombatUpdater : MonoBehaviour, Observer
         ressources = Ressources.GetInstance();
         buildings = Buildings.GetInstance();
         logger = Logger.GetInstance();
-        Time.fixedDeltaTime = 1;
         pView = GameObject.FindWithTag("Raiders").GetComponent<PhotonView>();
     }
 

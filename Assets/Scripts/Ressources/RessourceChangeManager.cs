@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class RessourceChangeManager : MonoBehaviour {
 
@@ -13,7 +14,7 @@ public class RessourceChangeManager : MonoBehaviour {
 
     public void SetRessourceChange(double value)
     {
-        UIText.text = value + "/s";
+        UIText.text = Math.Round(value,2) + "/s";
         if (value < 0)
         {
             UIText.color = Color.red;

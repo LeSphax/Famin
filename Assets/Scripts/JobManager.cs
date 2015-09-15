@@ -6,56 +6,52 @@ public class JobManager : MonoBehaviour
 {
     Jobs jobsData;
     Ressources ressourcesData;
-    Buildings buildingsData;
-    Logger logger;
     public Text textObject;
-    string jobName;
+    public string jobName;
 
     void Awake()
     {
-        jobName = textObject.text;
-        logger = Logger.GetInstance();
+        if (textObject != null)
+            jobName = textObject.text;
     }
 
     void Start()
     {
         jobsData = Jobs.GetInstance();
         ressourcesData = Ressources.GetInstance();
-        buildingsData = Buildings.GetInstance();
     }
 
     public void DeleteWorker()
     {
-        jobsData.ChangeJob(jobName, Data.IDLE, 1);
+        int number = 1;
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            number = 10;
+        for (int i = 0; i < number; i++)
+            jobsData.ChangeJob(jobName, Data.IDLE, 1);
     }
 
     public void AddWorker()
     {
-        if (jobsData.GetNumberOf(Data.IDLE) > 0)
+        int number = 1;
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            number = 10;
+        for (int i = 0; i < number; i++)
         {
-            jobsData.ChangeJob(Data.IDLE, jobName, 1);
-        }
-        //else if (buildingsData.GetPopLimit() > jobsData.GetTotalPopulation())
-        else if (ressourcesData.PayCosts(Data.GetCost(jobName)))
-        {
-            if (ressourcesData.PayCosts(Data.GetCost(Data.PERSON)))
+            if (jobName == Data.IDLE)
             {
-                jobsData.Add(jobName, 1);
+                if (ressourcesData.PayCosts(Data.GetCost(Data.PERSON)))
+                    jobsData.Add(jobName, 1);
             }
-            else
+            else if (jobsData.GetNumberOf(Data.IDLE) > 0)
             {
-                ressourcesData.RefundCost(Data.GetCost(jobName));
+                jobsData.ChangeJob(Data.IDLE, jobName, 1);
             }
-
         }
-        /*else
-        {
-            logger.PutLine("Build more houses");
-        }*/
     }
 
     public void OnClick()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             AddWorker();

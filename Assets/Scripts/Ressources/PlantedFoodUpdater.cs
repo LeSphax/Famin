@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlantedFoodUpdater : IUpdatingStrategy{
 
-
+    const double EFFICIENCY = 6;
 
     new void Awake()
     {
@@ -15,7 +15,7 @@ public class PlantedFoodUpdater : IUpdatingStrategy{
     {
         if (Seasons.GetCurrentSeason() == Seasons.FALL  || Seasons.GetCurrentSeason() == Seasons.SPRING)
         {
-            return jobs.GetNumberOf("Farmers") * 3;
+            return jobs.GetNumberOf("Farmers") * EFFICIENCY;
         }
         return 0;
     }
