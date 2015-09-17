@@ -25,16 +25,15 @@ public class JobManager : MonoBehaviour
     {
         int number = 1;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-            number = 10;
-        for (int i = 0; i < number; i++)
-            jobsData.ChangeJob(jobName, Data.IDLE, 1);
+            number = jobsData.GetNumberOf(jobName);
+        jobsData.ChangeJob(jobName, Data.IDLE, number);
     }
 
     public void AddWorker()
     {
         int number = 1;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-            number = 10;
+            number = jobsData.GetNumberOf(Data.IDLE);
         for (int i = 0; i < number; i++)
         {
             if (jobName == Data.IDLE)

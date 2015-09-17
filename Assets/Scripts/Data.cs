@@ -31,19 +31,17 @@ public class Data
     public const string IDLE = "Idle";
     public const string PERSON = "Person";
     public const string SOLDIERS = "Soldiers";
+    public const string RECRUITS = "Recruits";
     public const string RAIDERS = "Raiders";
     public const string SENT_RAIDERS = "Sent Raiders";
 
     static Cost[] FREE_COST = { };
-    static Cost[] HOUSE_COST = { new Cost(WOOD, 20), new Cost(STONE, 10) };
     static Cost[] PERSON_COST = { new Cost(FOOD, 100) };
-    static Cost[] WEAPON_COST = { new Cost(WOOD, 100) };
-    static Cost[] SOLDIER_COST = { new Cost(WOOD, 100) };
+    //static Cost[] WEAPON_COST = { new Cost(WOOD, 100) };
 
     static void InitCosts()
     {
         costs = new Dictionary<string, Cost[]>();
-        costs.Add(HOUSES, HOUSE_COST);
         costs.Add(FARMERS, FREE_COST);
         costs.Add(GATHERERS, FREE_COST);
         costs.Add(MINERS, FREE_COST);

@@ -8,7 +8,6 @@ public class Jobs
     static Jobs instance;
     ObservableDictionary<string, int> jobs;
 
-    Ressources ressources;
     public static string OBSERVE_ALL = "Villagers";
 
     public static Jobs GetInstance()
@@ -22,7 +21,6 @@ public class Jobs
 
     private Jobs()
     {
-        ressources = Ressources.GetInstance();
         InitDictionaries();
     }
 
@@ -92,23 +90,21 @@ public class Jobs
         return initNumber - number;
     }
 
-    public bool ChangeJob(string jobToChange, string jobToGet, int number)
+    public bool ChangeJob(string jobToChange, string jobToGet, int number = 1)
     {
 
         if (jobs[jobToChange] >= number)
         {
-            if (ressources.PayCosts(Data.GetCost(jobToGet), number))
-            {
-                jobs[jobToChange] -= number;
-                jobs[jobToGet] += number;
-                return true;
-            }
-            return false;
+            //if (ressources.PayCosts(Data.GetCost(jobToGet), number))
+
+            jobs[jobToChange] -= number;
+            jobs[jobToGet] += number;
+            return true;
         }
         return false;
     }
 
-    public bool ChangeJob(string jobToChange, string jobToGet)
+    /*public bool ChangeJob(string jobToChange, string jobToGet)
     {
         if (ressources.PayCosts(Data.GetCost(jobToGet), jobs[jobToChange]))
         {
@@ -117,5 +113,5 @@ public class Jobs
             return true;
         }
         return false;
-    }
+    }*/
 }

@@ -21,7 +21,7 @@ public class CombatUpdater : MonoBehaviour, Observer
     public GameObject display;
 
     int timer;
-    string labelEnnemies;
+    public static string labelEnnemies;
     PhotonView pView;
 
     void Awake()
@@ -84,10 +84,12 @@ public class CombatUpdater : MonoBehaviour, Observer
 
     void FightEnded(RaidManager.RaidResult result)
     {
-        if (result.Survivors== 0){
+        if (result.Survivors == 0)
+        {
             logger.PutLine("We successfully defeated the raiders !");
         }
-        else {
+        else
+        {
             logger.PutLine("The raiders defeated our army !");
             logger.PutLine("They " + result.ToString());
         }

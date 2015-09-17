@@ -15,7 +15,7 @@ public class JobNumberObserver : MonoBehaviour, Observer
             jobName = jobNameObject.text;
     }
 
-    public void UpdateObserver(object value)
+    public virtual void UpdateObserver(object value)
     {
         jobNumberObject.text = "" + value;
     }
