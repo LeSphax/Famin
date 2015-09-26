@@ -27,7 +27,7 @@ public class FoodUpdater : IUpdatingStrategy
         double recolt = 0;
         if (Seasons.GetCurrentSeason() == Seasons.SUMMER)
         {
-            recolt = Math.Min(jobs.GetNumberOf(Data.FARMERS) * FARMING_EFFICIENCY, ressources.GetNumberOf(Data.PLANTED_FOOD));
+            recolt = Math.Min(base.jobs.GetNumberOf(Data.FARMERS) * FARMING_EFFICIENCY, ressources.GetNumberOf(Data.PLANTED_FOOD)/RessourceUpdater.updateInterval);
             ressources.Add(Data.PLANTED_FOOD, -recolt * RessourceUpdater.updateInterval);
             recolt += jobs.GetNumberOf(Data.GATHERERS) * GATHERING_EFFICIENCY;
         }
@@ -39,7 +39,6 @@ public class FoodUpdater : IUpdatingStrategy
         {
             recolt = jobs.GetNumberOf(Data.GATHERERS) * GATHERING_EFFICIENCY;
         }
-        
         return Eat(recolt);
     }
 
@@ -49,7 +48,7 @@ public class FoodUpdater : IUpdatingStrategy
 
         if (timerDeath > 0) timerDeath--;
 
-        if (ressources.GetNumberOf(Data.FOOD) + recolt < 0)
+        else if (ressources.GetNumberOf(Data.FOOD) + recolt < 0)
         {
             StarveWorkers();
         }

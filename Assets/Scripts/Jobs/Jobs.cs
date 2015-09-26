@@ -6,9 +6,19 @@ public class Jobs
 {
 
     static Jobs instance;
+    static Jobs enemiesInstance;
     ObservableDictionary<string, int> jobs;
 
     public static string OBSERVE_ALL = "Villagers";
+
+    public static Jobs GetEnemies()
+    {
+        if (enemiesInstance == null)
+        {
+            enemiesInstance = new Jobs();
+        }
+        return enemiesInstance;
+    }
 
     public static Jobs GetInstance()
     {
@@ -50,7 +60,7 @@ public class Jobs
         jobs[jobName] = value;
     }
 
-    public void Add(string jobName, int value)
+    public void AddNumberOf(string jobName, int value)
     {
         jobs[jobName] += value;
     }

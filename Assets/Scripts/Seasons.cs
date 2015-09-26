@@ -10,6 +10,7 @@ public class Seasons : MonoBehaviour
     public Slider slider;
     public Image handleImage;
     float timer;
+    Jobs jobs;
     public static int currentSeason;
 
     public const int SUMMER = 0;
@@ -26,15 +27,16 @@ public class Seasons : MonoBehaviour
         currentSeason = startingSeason;
         handleImage.sprite = handles[currentSeason];
         timer = 0;
+        jobs = Jobs.GetInstance();
     }
 
     void Update()
     {
-
         timer += Time.deltaTime;
         if (timer >= DURATION)
         {
             ChangeHandle();
+            jobs.AddNumberOf(Data.IDLE, 1);
         }
         slider.value = (float)timer / DURATION * 100;
     }

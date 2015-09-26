@@ -31,13 +31,17 @@ public class Data
     public const string IDLE = "Idle";
     public const string PERSON = "Person";
     public const string SOLDIERS = "Soldiers";
+    public const string ENEMY_SOLDIERS = "Attackers";
     public const string RECRUITS = "Recruits";
-    public const string RAIDERS = "Raiders";
+    public const string LOOTERS = "Looters";
     public const string SENT_RAIDERS = "Sent Raiders";
+
+    public const string LOOTERS_TRIP = "Looters Trip";
 
     static Cost[] FREE_COST = { };
     static Cost[] PERSON_COST = { new Cost(FOOD, 100) };
     //static Cost[] WEAPON_COST = { new Cost(WOOD, 100) };
+    static Cost[] LOOTERS_TRIP_COST = { new Cost(FOOD,30)};
 
     static void InitCosts()
     {
@@ -49,8 +53,9 @@ public class Data
         costs.Add(IDLE, FREE_COST);
         costs.Add(PERSON, PERSON_COST);
         costs.Add(SOLDIERS, FREE_COST);
-        costs.Add(RAIDERS, FREE_COST);
+        costs.Add(LOOTERS, FREE_COST);
         costs.Add(SENT_RAIDERS, FREE_COST);
+        costs.Add(LOOTERS_TRIP, LOOTERS_TRIP_COST);
     }
 
     public static Cost[] GetCost(string name)

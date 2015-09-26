@@ -5,9 +5,9 @@ using System.Collections;
 public class JobManager : MonoBehaviour
 {
     Jobs jobsData;
-    Ressources ressourcesData;
     public Text textObject;
     public string jobName;
+    public string jobRequired = Data.IDLE;
 
     void Awake()
     {
@@ -18,7 +18,6 @@ public class JobManager : MonoBehaviour
     void Start()
     {
         jobsData = Jobs.GetInstance();
-        ressourcesData = Ressources.GetInstance();
     }
 
     public void DeleteWorker()
@@ -26,24 +25,30 @@ public class JobManager : MonoBehaviour
         int number = 1;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             number = jobsData.GetNumberOf(jobName);
-        jobsData.ChangeJob(jobName, Data.IDLE, number);
+        jobsData.ChangeJob(jobName, jobRequired, number);
     }
 
     public void AddWorker()
     {
-        int number = 1;
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-            number = jobsData.GetNumberOf(Data.IDLE);
-        for (int i = 0; i < number; i++)
+        bool canPay = false;
+        if (jobsData.GetNumberOf(jobRequired) > 0)
         {
-            if (jobName == Data.IDLE)
+            jobsData.ChangeJob(jobRequired, jobName, 1);
+        }
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            canPay = true;
+        }
+        while (canPay)
+        {
+
+            if (jobsData.GetNumberOf(jobRequired) > 0)
             {
-                if (ressourcesData.PayCosts(Data.GetCost(Data.PERSON)))
-                    jobsData.Add(jobName, 1);
+                jobsData.ChangeJob(jobRequired, jobName, 1);
             }
-            else if (jobsData.GetNumberOf(Data.IDLE) > 0)
+            else
             {
-                jobsData.ChangeJob(Data.IDLE, jobName, 1);
+                canPay = false;
             }
         }
     }

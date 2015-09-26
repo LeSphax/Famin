@@ -50,11 +50,7 @@ public class SoldierTrainingSlider : MonoBehaviour
         }
         else if (newNumberRecruits > numberRecruits)
         {
-            Debug.Log(numberRecruits);
-            Debug.Log(newNumberRecruits);
-            Debug.Log(numberRecruits / newNumberRecruits);
             percentage *= (float) (numberRecruits) / newNumberRecruits;
-            Debug.Log(percentage);
             training = true;
         }
         else if (newNumberRecruits == 0)

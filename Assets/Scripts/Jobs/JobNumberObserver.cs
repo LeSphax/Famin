@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System;
 
 public class JobNumberObserver : MonoBehaviour, Observer
 {
@@ -24,7 +24,8 @@ public class JobNumberObserver : MonoBehaviour, Observer
     {
         Jobs.GetInstance().AddObserver(this, jobName);
         if (jobNameObject != null)
-        jobNameObject.text = jobName + " : ";
+        jobNameObject.text = jobName;
+        Jobs.GetInstance().AddNumberOf(jobName, Int32.Parse(jobNumberObject.text));
     }
 
 

@@ -51,7 +51,7 @@ public class Ressources
     public void Add(string ressourceName, double value)
     {
         quantities[ressourceName] += value;
-        if (quantities[ressourceName] < 1)
+        if (quantities[ressourceName] < 0)
             quantities[ressourceName] = 0;
     }
 
@@ -97,22 +97,28 @@ public class Ressources
 
     public Cost[] StealRessources(ref int attackers)
     {
-        List<string> keys = new List<string>(quantities.GetKeys());
+        int ressourcesToSteal = 100 * attackers;
         List<Cost> list = new List<Cost>();
-        int i = 0;
-        foreach (string key in keys)
-        {
-            if (attackers == 0)
-            {
-                return list.ToArray();
-            }
-            int number = Math.Min(Convert.ToInt32(quantities[key]), attackers * 10);
-            list.Add(new Cost(key, number));
-            quantities[key] -= number;
-            attackers -= number / 10;
-            i++;
-        }
+        int ressourcesStolen = Math.Min(Convert.ToInt32(quantities[Data.FOOD]), ressourcesToSteal);
+        attackers -= ressourcesStolen / 100;
+        list.Add(new Cost(Data.FOOD, ressourcesStolen));
+        quantities[Data.FOOD] -= ressourcesStolen;
         return list.ToArray();
+
+        /* List<string> keys = new List<string>(quantities.GetKeys());
+         List<Cost> list = new List<Cost>();
+         foreach (string key in keys)
+         {
+             if (attackers == 0)
+             {
+                 return list.ToArray();
+             }
+             int number = Math.Min(Convert.ToInt32(quantities[key]), attackers * 100);
+             list.Add(new Cost(key, number));
+             quantities[key] -= number;
+             attackers -= number / 100;
+         }
+         return list.ToArray();*/
     }
 
 }
