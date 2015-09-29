@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
@@ -12,8 +12,6 @@ public class CombatUpdater : MonoBehaviour, Observer
 
     Jobs jobs;
     Jobs enemiesData;
-    Ressources ressources;
-    Buildings buildings;
     Logger logger;
 
     public Text textEnnemies;
@@ -30,16 +28,14 @@ public class CombatUpdater : MonoBehaviour, Observer
     void Awake()
     {
         jobs = Jobs.GetInstance();
-        ressources = Ressources.GetInstance();
         enemiesData = Jobs.GetEnemies();
-        buildings = Buildings.GetInstance();
         logger = Logger.GetInstance();
         pView = GameObject.FindWithTag("Raiders").GetComponent<PhotonView>();
     }
 
     void Start()
     {
-        timer = 0;
+        timer = TIMER_START;
         labelEnnemies = IDLE;
         enemiesData.AddObserver(this, Data.SOLDIERS);
     }
@@ -52,6 +48,7 @@ public class CombatUpdater : MonoBehaviour, Observer
             UpdateTimer();
             if (timer == 0)
             {
+                timer = TIMER_START;
                 labelEnnemies = FIGHTING;
                 defendersArmy = new Army(jobs, jobs.GetNumberOf(Data.SOLDIERS), jobs.GetNumberOf(Data.RECRUITS));
                 InvokeRepeating("Fight", 0, 1);
@@ -65,23 +62,19 @@ public class CombatUpdater : MonoBehaviour, Observer
         int resultFight = Army.Fight(defendersArmy, attackersArmy);
         if (resultFight == 1)
         {
-            RaidManager.RaidResult raidResult = new RaidManager.RaidResult();
+            RaidManager.RaidResult raidResult = new RaidManager.RaidResult(false, defendersArmy.DeadSoldiers);
             FightEnded(raidResult);
         }
         else if (resultFight == -1)
         {
-            RaidManager.RaidResult raidResult = new RaidManager.RaidResult();
-            int attackersLeft = enemiesData.GetNumberOf(Data.SOLDIERS);
-            raidResult.Survivors = attackersLeft;
-            raidResult.Booty = Loot(ref attackersLeft);
-            raidResult.Killed = defendersArmy.DeadSoldiers + Slaugther(ref attackersLeft);
-            enemiesData.SetNumberOf(Data.SOLDIERS, 0);
+            RaidManager.RaidResult raidResult = new RaidManager.RaidResult(true, defendersArmy.DeadSoldiers);
             FightEnded(raidResult);
         }
     }
 
     void FightEnded(RaidManager.RaidResult result)
     {
+        enemiesData.SetNumberOf(Data.SOLDIERS, 0);
         logger.PutLine(result.EnemysRaidResult());
         pView.RPC("RaidReturned", PhotonTargets.Others, result.Serialize());
         labelEnnemies = IDLE;
@@ -89,25 +82,7 @@ public class CombatUpdater : MonoBehaviour, Observer
         CancelInvoke("Fight");
     }
 
-    Cost[] Loot(ref int attackers)
-    {
-        Cost[] costs = ressources.StealRessources(ref attackers);
-        return costs;
-    }
-
-    int Slaugther(ref int attackers)
-    {
-        int killed = jobs.KillPeople(attackers);
-        attackers -= killed;
-        return killed;
-    }
-
-    int Burn(int attackers)
-    {
-        return buildings.Burn(attackers);
-    }
-
-    [RPC]
+    [PunRPC]
     public void RaidLaunched(int numberAttackers)
     {
         display.SetActive(true);
@@ -122,7 +97,7 @@ public class CombatUpdater : MonoBehaviour, Observer
 
     public void UpdateObserver(object value)
     {
-        textEnnemies.text = ""+Convert.ToInt32(value);
+        textEnnemies.text = "" + Convert.ToInt32(value);
     }
 
     public void UpdateTimer()

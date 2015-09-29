@@ -59,7 +59,7 @@ public class FoodUpdater : IUpdatingStrategy
     {
         if (timerDeath == 0)
         {
-            logger.PutLine("A worker starved to death!");
+            logger.PutLine("A villager starved to death!");
             jobs.KillPeople(1 + (int)(ressources.GetNumberOf(Data.FOOD)) / -severalDeathsThreshold);
             ressources.SetNumberOf(Data.FOOD, 0);
             timerDeath = roundsBetweenDeaths;

@@ -6,28 +6,81 @@ Direct3D:
     Vendor:   ATI
     VRAM:     2035 MB
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\Photon3Unity3D.dll (this message is harmless)
-Loading C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
-- Completed reload, in  0.138 seconds
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Photon3Unity3D.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
+- Completed reload, in  0.063 seconds
+desktop: 1920x1080 60Hz; virtual: 4020x1313 at -2100,0
+<RI> Initializing input.
+<RI> Input initialized.
+Initialize engine version: 5.1.1f1 (2046fc06d4d8)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon HD 6900M Series (ID=0x6720)
+    Vendor:   ATI
+    VRAM:     2035 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Photon3Unity3D.dll (this message is harmless)
+Loading C:\Users\Sébastien\Documents\Famine\test_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
+- Completed reload, in  0.100 seconds
 desktop: 1920x1080 60Hz; virtual: 4020x1313 at -2100,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\Sébastien\Documents\CivClicker\test_Data\Managed\System.dll (this message is harmless)
-Can't join random room!
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\System.dll (this message is harmless)
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Sébastien\Documents\Famine\test_Data\Managed\System.dll (this message is harmless)
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.468844 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 854.
+Total: 0.773477 ms (FindLiveObjects: 0.048517 ms CreateObjectMapping: 0.032189 ms MarkObjects: 0.668511 ms  DeleteObjects: 0.016327 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.405399 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 854.
+Total: 0.974543 ms (FindLiveObjects: 0.080706 ms CreateObjectMapping: 0.048983 ms MarkObjects: 0.811731 ms  DeleteObjects: 0.023325 ms)
+
+Fight51
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Out   Damages10deadSoldiers0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Receiving failed. SocketException: TimedOut
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 

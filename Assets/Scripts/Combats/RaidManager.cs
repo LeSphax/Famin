@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.IO;
@@ -62,7 +62,7 @@ public class RaidManager : MonoBehaviour
         }
     }
 
-    [RPC]
+    [PunRPC]
     public void RaidReturned(byte[] result)
     {
         RaidResult raidResult = RaidResult.Deserialize(result);
@@ -77,13 +77,14 @@ public class RaidManager : MonoBehaviour
     public class RaidResult
     {
 
-        public RaidResult()
+        bool victorious;
+
+        public bool Victorious
         {
-            survivors = 0;
-            killed = 0;
-            burned = 0;
-            Booty = null;
+            get { return victorious; }
+            set { victorious = value; }
         }
+
         int survivors;
 
         public int Survivors
@@ -100,20 +101,39 @@ public class RaidManager : MonoBehaviour
             set { killed = value; }
         }
 
-        int burned;
-
-        public int Burned
-        {
-            get { return burned; }
-            set { burned = value; }
-        }
-
         Cost[] booty;
 
         public Cost[] Booty
         {
             get { return booty; }
             set { booty = value; }
+        }
+
+
+
+        public RaidResult(bool victorious, int killedDuringBattle)
+        {
+            Jobs enemiesData = Jobs.GetEnemies();
+            int attackersLeft = enemiesData.GetNumberOf(Data.SOLDIERS);
+            Survivors = attackersLeft;
+            if (victorious)
+            {
+                Booty = Loot(ref attackersLeft);
+                Killed = killedDuringBattle + Slaugther(ref attackersLeft);
+            }
+        }
+
+        Cost[] Loot(ref int attackers)
+        {
+            Cost[] costs = Ressources.GetInstance().StealRessources(ref attackers);
+            return costs;
+        }
+
+        int Slaugther(ref int attackers)
+        {
+            int killed = Jobs.GetInstance().KillPeople(attackers);
+            attackers -= killed;
+            return killed;
         }
 
         public byte[] Serialize()
@@ -143,7 +163,7 @@ public class RaidManager : MonoBehaviour
         public string EnemysRaidResult()
         {
             String log = "";
-            if (Survivors == 0)
+            if (!victorious)
             {
                 return "We defeated the enemy " + Data.LOOTERS + " ! " + Killed + " of our people have died";
             }
@@ -156,11 +176,7 @@ public class RaidManager : MonoBehaviour
                 }
                 if (Killed > 0)
                 {
-                    log += " killed " + Killed + " of our people";
-                }
-                if (Burned > 0)
-                {
-                    log += " burned " + Burned + " houses";
+                    log += "and killed " + Killed + " of our people";
                 }
                 log += ".";
                 return log;
@@ -170,24 +186,20 @@ public class RaidManager : MonoBehaviour
         public string OurRaidResult()
         {
             String log = "";
-            if (Survivors == 0)
+            if (!victorious)
             {
-                return "Our " + Data.LOOTERS + " didn't come back";
+                return "Our " + Data.LOOTERS + " lost this battle, they managed to kill " + Killed + " enemies but only " + Survivors + " of them survived";
             }
             else
             {
-                log += Survivors + " of our " + Data.LOOTERS + " have returned ! They ";
+                log += Survivors + " of our " + Data.LOOTERS + " were victorious ! They ";
                 if (Booty.Length > 0)
                 {
                     log += "stole " + Cost.toString(Booty);
                 }
                 if (Killed > 0)
                 {
-                    log += " killed " + Killed + " people";
-                }
-                if (Burned > 0)
-                {
-                    log += " burned " + Burned + " houses";
+                    log += "and killed " + Killed + " people";
                 }
                 log += ".";
                 return log;
