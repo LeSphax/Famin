@@ -116,6 +116,7 @@ public class RaidManager : MonoBehaviour
             Jobs enemiesData = Jobs.GetEnemies();
             int attackersLeft = enemiesData.GetNumberOf(Data.SOLDIERS);
             Survivors = attackersLeft;
+            Victorious = victorious;
             if (victorious)
             {
                 Booty = Loot(ref attackersLeft);

@@ -13,7 +13,7 @@ public class PlantedFoodUpdater : IUpdatingStrategy{
 
     public override double CalculateIncrement()
     {
-        if (Seasons.GetCurrentSeason() == Seasons.FALL  || Seasons.GetCurrentSeason() == Seasons.SPRING)
+        if (Seasons.GetCurrentSeason() == Seasons.FALL )
         {
             return jobs.GetNumberOf("Farmers") * EFFICIENCY;
         }
