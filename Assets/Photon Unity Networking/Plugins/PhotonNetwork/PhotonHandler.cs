@@ -6,9 +6,10 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using ExitGames.Client.Photon;
 using UnityEngine;
-
+using Debug = UnityEngine.Debug;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
@@ -28,7 +29,9 @@ internal class PhotonHandler : Photon.MonoBehaviour
     private int nextSendTickCountOnSerialize = 0;
 
     private static bool sendThreadShouldRun;
-    
+
+    private static Stopwatch timerToStopConnectionInBackground;
+
     protected internal static bool AppQuits;
 
     protected internal static Type PingImplementation = null;
@@ -55,6 +58,36 @@ internal class PhotonHandler : Photon.MonoBehaviour
         PhotonHandler.AppQuits = true;
         PhotonHandler.StopFallbackSendAckThread();
         PhotonNetwork.Disconnect();
+    }
+
+    /// <summary>
+    /// Called by Unity when the application gets paused (e.g. on Android when in background).
+    /// </summary>
+    /// <remarks>
+    /// Some versions of Unity will give false values for pause on Android (and possibly on other platforms).
+    /// Sets a disconnect timer when PhotonNetwork.BackgroundTimeout > 0.001f.
+    /// </remarks>
+    /// <param name="pause"></param>
+    protected void OnApplicationPause(bool pause)
+    {
+        if (PhotonNetwork.BackgroundTimeout > 0.001f)
+        {
+            if (timerToStopConnectionInBackground == null)
+            {
+                timerToStopConnectionInBackground = new Stopwatch();
+            }
+
+            if (pause)
+            {
+                timerToStopConnectionInBackground.Reset();
+                timerToStopConnectionInBackground.Start();
+
+            }
+            else
+            {
+                timerToStopConnectionInBackground.Stop();
+            }
+        }
     }
 
     /// <summary>Called by Unity when the play mode ends. Used to cleanup.</summary>
@@ -121,7 +154,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
     protected void OnLevelWasLoaded(int level)
     {
         PhotonNetwork.networkingPeer.NewSceneLoaded();
-        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(Application.loadedLevelName);
+        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(SceneManagerHelper.ActiveSceneName);
     }
 
     protected void OnJoinedRoom()
@@ -131,7 +164,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
 
     protected void OnCreatedRoom()
     {
-        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(Application.loadedLevelName);
+        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(SceneManagerHelper.ActiveSceneName);
     }
 
     public static void StartFallbackSendAckThread()
@@ -159,11 +192,24 @@ internal class PhotonHandler : Photon.MonoBehaviour
         if (sendThreadShouldRun && PhotonNetwork.networkingPeer != null)
         {
             PhotonNetwork.networkingPeer.SendAcksOnly();
+
+            // check if the client should disconnect after some seconds in background
+            if (timerToStopConnectionInBackground != null && PhotonNetwork.BackgroundTimeout > 0.001f)
+            {
+                if (timerToStopConnectionInBackground.ElapsedMilliseconds > PhotonNetwork.BackgroundTimeout*1000)
+                {
+                    timerToStopConnectionInBackground.Stop();
+                    timerToStopConnectionInBackground.Reset();
+
+                    PhotonNetwork.Disconnect();
+                    return sendThreadShouldRun;
+                }
+            }
         }
 
         return sendThreadShouldRun;
     }
-    
+
 
     #region Photon Cloud Ping Evaluation
 

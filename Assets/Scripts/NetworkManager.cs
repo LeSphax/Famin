@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class NetworkManager : Photon.MonoBehaviour
+public class NetworkManager : Photon.PunBehaviour
 {
     private const string typeName = "Famine";
     private const string roomName = "PREPARETOFIGHT";
@@ -9,6 +9,7 @@ public class NetworkManager : Photon.MonoBehaviour
 
     enum NetworkState
     {
+        IDLE,
         IN_LOBBY,
         WAITING_IN_ROOM,
         PLAYING
@@ -22,16 +23,27 @@ public class NetworkManager : Photon.MonoBehaviour
         GameObject.DontDestroyOnLoad(this);
     }
 
-    void Start()
+    public override void OnJoinedLobby()
     {
         state = NetworkState.IN_LOBBY;
+
+    }
+
+    void Start()
+    {
+        state = NetworkState.IDLE;
         PhotonNetwork.ConnectUsingSettings("0.1");
     }
 
-    public void OnPhotonPlayerConnected(PhotonPlayer player)
+    public override void OnPhotonPlayerConnected(PhotonPlayer player)
     {
+        state = NetworkState.PLAYING;
+        Application.LoadLevel("Main");
         switch (state)
         {
+            case NetworkState.IDLE:
+                Debug.LogError("Players shoudln't connect while we aren't in lobby");
+                break;
             case NetworkState.IN_LOBBY:
                 Debug.LogError("Players shoudln't connect while we aren't in a room");
                 break;
@@ -50,6 +62,9 @@ public class NetworkManager : Photon.MonoBehaviour
     {
         switch (state)
         {
+            case NetworkState.IDLE:
+                GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
+                break;
             case NetworkState.IN_LOBBY:
                 GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
                 GUI.Label(new Rect(500, 0, 150, 50), "ROOMS");
