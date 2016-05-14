@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class NetworkManager : Photon.PunBehaviour
 {
@@ -20,7 +19,7 @@ public class NetworkManager : Photon.PunBehaviour
     void Awake()
     {
         Time.fixedDeltaTime = 1.0f;
-        GameObject.DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
     }
 
     public override void OnJoinedLobby()
@@ -60,6 +59,7 @@ public class NetworkManager : Photon.PunBehaviour
 
     void OnGUI()
     {
+        Debug.Log(state);
         switch (state)
         {
             case NetworkState.IDLE:
