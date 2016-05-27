@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class PlantedFoodUpdater : IUpdatingStrategy{
+﻿public class PlantedFoodUpdater : IUpdatingStrategy{
 
     const double EFFICIENCY = 6;
 
